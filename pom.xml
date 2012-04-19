@@ -3,19 +3,20 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.longhorn.ticket</groupId>
   <artifactId>ticket-server</artifactId>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <version>1.0.0-SNAPSHOT</version>
   <name>ticket-server</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <slf4j.version>1.6.4</slf4j.version>
     <logback.version>1.0.1</logback.version>
+    <curator.version>1.1.8</curator.version>
   </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.10</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -33,5 +34,33 @@
       <artifactId>logback-core</artifactId>
       <version>${logback.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.netflix.curator</groupId>
+      <artifactId>curator-framework</artifactId>
+      <version>${curator.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.netflix.curator</groupId>
+      <artifactId>curator-recipes</artifactId>
+      <version>${curator.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+    </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>maven-jetty-plugin</artifactId>
+        <version>6.1.26</version>
+        <configuration>
+          <scanIntervalSeconds>10</scanIntervalSeconds>
+          <contextPath>/</contextPath>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

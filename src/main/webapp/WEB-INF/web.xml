@@ -12,8 +12,7 @@
     <servlet-class>org.longhorn.ticket.servlet.TicketServlet</servlet-class>
     <init-param>
       <param-name>zkurl</param-name>
-      <param-value>
-      </param-value>
+      <param-value>127.0.0.1:2181</param-value>
     </init-param>
     <load-on-startup>2</load-on-startup>
   </servlet>
