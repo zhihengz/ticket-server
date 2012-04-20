@@ -24,12 +24,19 @@ public class LockExecutor {
     }
 
     public void execute( CriticalSection  cs ) throws Exception {
-        logger.debug( "acquiring lock to {}", path);
-        lock.acquire();
-        logger.info( "acquired lock to {}", path);
-        cs.doExec();
-        logger.debug( "releasing lock to {}", path);
-        lock.release();
-        logger.debug( "released lock to {}", path);
+        try {
+            logger.debug( "acquiring lock to {}", path);
+            lock.acquire();
+            logger.info( "acquired lock to {}", path);
+            cs.doExec();
+        } finally {
+            logger.debug( "releasing lock to {}", path);
+            try {
+                lock.release();
+            } catch( Exception e ) {
+                //do nothing
+            }
+            logger.debug( "released lock to {}", path);
+        }
     }
 }
