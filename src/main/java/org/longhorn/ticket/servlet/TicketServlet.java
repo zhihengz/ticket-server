@@ -17,10 +17,15 @@ public class TicketServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
 
         super.init(config);
-        String zkConn = config.getInitParameter("zkurl");
-        logger.info( "zookeeper url: " + zkConn );
-        ticketService = new TicketService( zkConn );
-        ticketService.start();
+        String configPath = config.getInitParameter("configuration");
+        try {
+            String zkConn = ServiceConfigurator.loadConfiguration( configPath ).getZookeeperConnectionString();
+            logger.info( "zookeeper url: " + zkConn );
+            ticketService = new TicketService( zkConn );
+            ticketService.start();
+        } catch( IOException e ) {
+            throw new ServletException( "file to load configuration from " + configPath, e);
+        }
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
